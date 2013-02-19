@@ -10,7 +10,11 @@ readFile = open(filename, 'wb')
 csvwriter = csv.DictWriter(readFile, fieldnames = ("is_post", "publish_date", "author", "url", "post_title", "comment_count"))
 
 def hwscraper(site, previous = []):
-  if site in previous:
+  bad = re.compile("pinterest")
+  bad2 = re.compile("linkedin")
+  bad3 = re.compile("jpg")
+  bad4 = re.compile("png")
+  if site in previous or bad.search(str(site)) or bad2.search(str(site)) or bad3.search(str(site)) or bad4.search(str(site)):
     return
 # check if meta property = "article" for is post, and also author/date/etc.
   print site
@@ -38,7 +42,7 @@ def hwscraper(site, previous = []):
       author = str(tag).split('content="http://citizen-statistician.org/author/')[1].split("/>")[0]
 
   s = re.compile(r"share")
-  x = re.compile(r"citizen")
+  x = re.compile(r"citizen-statistician.org")
   y = re.compile(r"comment")
   ht = re.compile("#")
   s = re.compile(r"social-all")
